@@ -4,17 +4,16 @@ function Movies ({ movies }) {
 export default Movies
 
 export const hasMovies = (movies) => {
-  console.log('render')
   return (
     <section className='movies-list'>
       {!movies && <p style={{ textAlign: 'center' }}>No movies found with that title.</p>}
       {
-        movies && movies.map(({ Title, Year, Poster }) =>
+        movies && movies.map(({ id, title, year, image }) =>
           (
-            <div className='movie-item' key={Poster}>
-              <h3>{Title}</h3>
-              <p>{Year}</p>
-              <img src={Poster} alt={Title} />
+            <div className='movie-item' key={id}>
+              <h3>{title}</h3>
+              <p>{year}</p>
+              <img src={image} alt={title} />
             </div>
           )
         )

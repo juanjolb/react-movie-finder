@@ -1,16 +1,17 @@
 import Movies from './components/Movies'
 import useMovies from './hooks/useMovies'
-import { useState } from 'react'
 
 import './App.css'
+import useSearch from './hooks/useSearch'
 
 function App () {
-  const [search, setSearch] = useState('')
+  const { search, setSearch, formError } = useSearch()
   const { movies, getMovies, loading, error } = useMovies(search)
 
-  const handleChange = (e) => {
-    const newSearch = e.target.value
+  const handleChange = (event) => {
+    const newSearch = event.target.value
     setSearch(newSearch)
+    getMovies(newSearch)
   }
 
   const handleSubmit = (e) => {
@@ -24,8 +25,9 @@ function App () {
         <h1>Search for a movie</h1>
         <form onSubmit={handleSubmit}>
           <input onChange={handleChange} value={search} type='search' name='search_field' placeholder='Avatar, Gran torino...' />
-          <input type='submit' value='Search' />
+          <input type='submit' value='Search' disabled={formError} />
         </form>
+        {formError && <small style={{ color: 'red' }}>{formError}</small>}
       </header>
       <main>
         {
